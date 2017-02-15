@@ -1,2 +1,3 @@
-# psuedocms
-CMS where data is stored in XML
+# Psuedo Content Management System
+
+This will be updated soon.
