@@ -1,0 +1,161 @@
+﻿@black:#333;
+@white:#fff;
+@font-1: 'Quicksand', sans-serif;
+@font-2: 'Open Sans', sans-serif;
+
+body
+{
+    background:@white;
+	overflow-y:scroll;
+}
+
+
+.container
+{
+    width:960px;
+    margin:0 auto;
+    padding:20px;
+}
+
+
+
+
+@thumb-size: 220px;
+#work
+{ 
+	padding:80px 0;
+	h1
+	{
+		font-family: @font-1;
+		text-align:center;
+		margin-bottom:40px;
+		font-weight:300;
+		font-size:32px;
+	}
+	a
+	{
+		color:#10678e;
+		text-decoration:none;
+		font-weight:700;
+		&:hover
+		{
+			color:#808080;
+		}
+	}
+	.work-container
+	{
+		.thumb-row
+		{
+			.clearfix;
+			.thumb
+			{
+				position:relative;
+				background:#fff;
+				width: @thumb-size;
+				height: @thumb-size;
+				float:left;
+				margin:10px;
+				cursor:pointer;
+				img
+					{
+					border-radius:110px;
+					}
+				.overlay
+				{
+					position:absolute;
+					top:0;
+					width: @thumb-size;
+					line-height: @thumb-size;
+					opacity:0;
+					
+					border-radius:110px;
+					&:hover
+					{
+						opacity:1;
+					}
+					.overlay-text
+					{
+						width:~"calc(100% - 20px)";
+						padding:0 10px;
+						display:inline-block;
+						vertical-align:middle;
+						text-align:center;
+						line-height:1em;
+						font-family: @font-1;
+						font-size:30px;
+					}
+				}
+			}
+		}
+		.detail-container
+		{
+			.thumb-pointer
+			{
+				width: 0; 
+				height: 0; 
+				border-left: 10px solid transparent; 
+				border-right: 10px solid transparent; 
+				border-bottom: 20px solid @black;
+				margin-top:40px;
+					&[data-column="0"]
+					{
+						margin-left:110px;
+					}
+					&[data-column="1"]
+					{
+						margin-left:350px;
+					}
+					&[data-column="2"]
+					{
+						margin-left:590px;
+					}
+					&[data-column="3"]
+					{
+						margin-left:830px;
+					}
+			}
+			.detail
+			{
+				width:700px;
+				margin:0 auto;
+				padding:40px 20px;
+				margin-bottom:80px;
+				border-top:1px solid @black;
+				border-bottom:1px solid @black;	
+				.text
+				{
+					font-family: @font-2;
+					font-size:16px;
+					color:@black;
+					margin-bottom:80px;
+				}
+				.slides
+				{
+					img
+					{
+						display:block;
+						max-width:100%;
+						margin:0 auto 40px;
+					}
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+.clearfix
+{
+    &:after {
+    content:" ";
+    display:block;
+    clear:both;
+    }
+}
+.hidden
+{
+	display:none;
+}
