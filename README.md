@@ -1,6 +1,6 @@
 # Psuedo Content Management System
 
-This site was created to enable me to display and quickly update a portfolio of creative projects. 
+This site was created to enable me to display and quickly update a portfolio of creative projects. There is no "content manager" side for this system. Rather, I update the "data" directly.
 
 ## XML Data 
 Because of the nature of github pages, I neeeded to create a solution that did not involve use of a database. Data is stored in an XML file that is accessed using jQuery.
