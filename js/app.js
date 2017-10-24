@@ -7,32 +7,45 @@ var activeThumb = -1;
 //Events
 $(document).ready(function () {
 
-	//Load Html Templates
-	loadTemplates();
+	
 
-	//Load Data
-	readXml();
 
-	//Load View from Data
-	initializeView();
 
-    //Thumb Click
-	$('.thumb').click(function () {
-		if (activeThumb != $(this).data('id'))
-		{
-			displayDetailsFromThumb(this);
-			activeThumb = $(this).data('id');
-		}
-		else
-		{
-			hideDetails();
-			activeThumb = -1;
-		}
-		this.scrollIntoView(true);
-    });
+	////Load Html Templates
+	//loadTemplates();
+
+	////Load Data
+	//readXml();
+
+	////Load View from Data
+	//initializeView();
+
+    ////Thumb Click
+	//$('.thumb').click(function () {
+	//	if (activeThumb != $(this).data('id'))
+	//	{
+	//		displayDetailsFromThumb(this);
+	//		activeThumb = $(this).data('id');
+	//	}
+	//	else
+	//	{
+	//		hideDetails();
+	//		activeThumb = -1;
+	//	}
+	//	this.scrollIntoView(true);
+    //});
 
  
 });
+
+
+
+
+
+
+
+
+
 
 function loadTemplates()
 {

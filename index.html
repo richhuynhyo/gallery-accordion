@@ -4,47 +4,58 @@
 	<title>Richard Huynh</title>
 	<link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,300italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/main.css" />
 	<link rel="stylesheet" href="css/normalize.css">
-	<link rel="stylesheet" href="css/main.min.css">
+	<link href="css/foundation.css" rel="stylesheet" />
 	<script src="js/vendor/jquery.min.js"></script>
-	<script src="js/app.js"></script>
+	<script src="js/richGallery.js"></script>
 </head>
 <body>
 	<div id="header">
 		<div class="container">
-			
+
 		</div>
 	</div>
-	<div id="main">
+	<div id="off-canvas-wrapper-inner">
 		<div class="container">
-			<div id="work">
+			<div id="rich_gallery" class="rg-container">
+				<div class="rg-preview">
+					<img class="thumbnail" src="https://placehold.it/550x550">
+				</div>
+				<div class="rg-preview">
+					<img class="thumbnail" src="https://placehold.it/550x550">
+				</div>
+				<div class="rg-preview">
+					<img class="thumbnail" src="https://placehold.it/550x550">
+				</div>
+				<div class="rg-preview">
+					<img class="thumbnail" src="https://placehold.it/550x550">
+				</div>
+				<div class="rg-preview">
+					<img class="thumbnail" src="https://placehold.it/550x550">
+				</div>
+				<div class="rg-preview">
+					<img class="thumbnail" src="https://placehold.it/550x550">
+				</div>
+				<div class="rg-preview">
+					<img class="thumbnail" src="https://placehold.it/550x550">
+				</div>
+				<div class="rg-preview">
+					<img class="thumbnail" src="https://placehold.it/550x550">
+				</div>
 			</div>
 		</div>
 	</div>
+
+
+
 
 	<!--Templates-->
 	<div id="templateContainer" class="hidden">
-		<div id="thumbTemplate">
-			<div class="thumb" data-id="[[id]]">
-				<img src="[[thumb]]" />
-				<div class="overlay" style="background:[[overlay]];">
-					<div class="overlay-text">[[tagline]]</div>
-				</div>
-			</div>
-		</div>
 
-		<div id="workOverlayTemplate">
-			<div class="thumb-pointer" data-column="[[column]]"></div>
-			<div class="detail">
-				<div class="text">
-					<h1>[[name]]</h1>
-					<p>[[description]]</p>
-					<p>[[skills]]</p>
-					<p>[[date]]</p>
-				</div>
-				<div class="slides">
-					[[slides]]
-				</div>
+		<div id="rg-expandTemplate">
+			<div class="rg-expand-container">
+				[[html]]
 			</div>
 		</div>
 	</div>
