@@ -1,11 +1,22 @@
 ﻿.rg-preview {
   float: left;
-  width: 25%;
+  width: 50%;
 }
 .rg-preview img {
   display: block;
   width: 100%;
 }
-.hidden {
-  display: none;
+@media (min-width: 640px) {
+  .rg-preview {
+    width: 33.3333%;
+  }
+}
+@media (min-width: 960px) {
+  .rg-preview {
+    width: 25%;
+  }
+}
+.rg-expand-container {
+  width: 100%;
+  clear: both;
 }
