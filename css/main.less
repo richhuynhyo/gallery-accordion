@@ -1,17 +1,26 @@
 ﻿.rg-preview
 {
 	float:left;
-	width:25%;
+	width:50%;
 
 	img
 	{
 		display:block;
 		width:100%;
 	}
+	@media (min-width: 640px)
+	{		
+		width:33.3333%;
+	}
+
+	@media (min-width: 960px)
+	{		
+		width:25%;
+	}
 }
 
-
-.hidden
+.rg-expand-container
 {
-	display:none;
+	width:100%;
+	clear:both;
 }

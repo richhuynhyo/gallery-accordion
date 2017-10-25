@@ -1,44 +1,62 @@
 
 //Rich Gallery - Current Version - 1.0
 
-//var two_minWidth = 100;
-//var three_minWidth = 100;
-var four_minWidth = 0;
+//User Settings
+var rg_rowCount_minWidth = [
+	[4, 960],
+	[3, 640],
+	[2, 0]
+];
 
-//Global Variables
+//Computational Global Variables - Do Not Touch
+var rg_rowCount = 0;
 var rg_previewList = [];
 var rg_expandObjectList = [];
 var rg_templates = { expand: "" };
-var rg_screenWidth = 0;
+var rg_activeExpand = 0;
+
 
 //Events
 $(document).ready(function () {
-	//Get Screen Width
-	rg_screenWidth = $(document).width();
-
-	//Load Data to Memory
+	////Load Data to Memory
 	rg_readExpandData();
 
-	//Load Template to Memory
+	////Load Template to Memory
 	rg_loadTemplate();
 
-	//Add data-attributes to HTML
+	//Add RG preview-id data-attributes to original HTML
 	rg_addDataAndCreateList('#rich_gallery');
 
+	//Counts preview boxes per row From screenWidth/user settings
+	rg_getRowCount();
 
-	$('#rich_gallery > .rg-preview').click(function ()
-	{
+	//Window Resize - Calculate preview boxes in a row through user settings
+	$(window).on('resize', function () {
+		rg_getRowCount();
+	});
+
+	//Click
+	$('#rich_gallery > .rg-preview').click(function () {
 		//Potential multiple containers?
 		var container = '#rich_gallery';
 		var previewId = $(this).attr('data-rg-id');
 
 		rg_insertExpand(container, previewId);
-
 	});
-
 });
 
-//Init
+
+
+//Initialize
+function rg_addDataAndCreateList(container) {
+	var count = 1;
+	$(container + ' > .rg-preview').each(function () {
+		$(this).attr('data-rg-id', count);
+		rg_previewList.push(this);
+		count++;
+	});
+}
+
 function rg_loadTemplate() {
 	rg_templates.expand = $('#rg-expandTemplate').html();
 }
@@ -71,36 +89,49 @@ function rg_readExpandData() {
 }
 
 
-
-
-
-function rg_addDataAndCreateList(container)
-{
-	var count = 1;
-	$(container + ' > .rg-preview').each(function () {
-		$(this).attr('data-rg-id', count);
-		rg_previewList.push(this);
-		count++;
-	});
+//Set Row Count global variable
+function rg_getRowCount() {
+	var screenWidth = $(window).width();
+	for (i = 0; i < rg_rowCount_minWidth.length; i++) {
+		if (screenWidth > rg_rowCount_minWidth[i][1]) {
+			if (rg_rowCount != rg_rowCount_minWidth[i][0]) {
+				rg_clearExpand();
+				rg_rowCount = rg_rowCount_minWidth[i][0];
+			}
+			break;
+		}
+	}
 }
 
+
+//Create and Destroy expand box
 function rg_insertExpand(container, previewId)
 {
-	var previewRowEnd = 0;
-
-	//Clear Expands
-	rg_clearExpand();
-
-	//Get PreviewRowEnd
-	if (rg_screenWidth > four_minWidth)
+	if (previewId == rg_activeExpand)
 	{
-		previewRowEnd = roundNumberUp(previewId, 4);
+		rg_clearExpand();
 	}
+	else
+	{
+		var previewRowEnd = roundNumberUp(previewId, rg_rowCount);
 
-	rg_getDataToTemplate(previewId);
+		//If previewRowEnd < total previews, then the last preview is the end.
+		if (previewRowEnd > rg_previewList.length)
+		{
+			previewRowEnd = rg_previewList.length;
+		}
 
-	//Place after previewRowEnd
-	$(container + ' > .rg-preview[data-rg-id="' + previewRowEnd + '"]').after(rg_getDataToTemplate(previewId));
+
+		//Clear Expands
+		rg_clearExpand();
+		rg_getDataToTemplate(previewId);
+
+		//Place after previewRowEnd
+		$(container + ' > .rg-preview[data-rg-id="' + previewRowEnd + '"]').after(rg_getDataToTemplate(previewId));
+
+		//Set globalVariable rg_activeExpand to previewId
+		rg_activeExpand = previewId;
+	}
 }
 
 function rg_getDataToTemplate(id)
@@ -109,25 +140,18 @@ function rg_getDataToTemplate(id)
 	return rg_templates.expand.replace("[[html]]", expandData.content);
 }
 
-
-
-
-
-
-
 function rg_clearExpand() {
+	rg_activeExpand = 0;
 	$('.rg-expand-container').remove();
 }
 
 
 
-
-//Class
+//Expand Object Class
 function rg_expandObject(id, content) {
 	this.id = id;
 	this.content = content;
 }
-
 
 
 
