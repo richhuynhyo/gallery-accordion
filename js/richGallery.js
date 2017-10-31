@@ -1,31 +1,40 @@
 
-//Rich Gallery - Current Version - 1.0
+/*
+	Rich Gallery - Current Version - 1.0
+	Current Implementation - Only 1 RichGallery per page.
+*/
+
 
 //User Settings
 var rg_rowCount_minWidth = [
+	//Set number of previews in a row to the minimum screen width (Highest to Lowest order).
 	[4, 960],
 	[3, 640],
 	[2, 0]
 ];
 
+//Optional Settings
+var rg_container_id = "rich_gallery";
+var rg_data_xml = "rg_dropdownData.xml";
+
 //Computational Global Variables - Do Not Touch
+var rg_container = "#" + rg_container_id;
 var rg_rowCount = 0;
 var rg_previewList = [];
-var rg_expandObjectList = [];
-var rg_templates = { expand: "" };
-var rg_activeExpand = 0;
-
+var rg_dropdownObjectList = [];
+var rg_templates = { dropdown: "" };
+var rg_activeDropdown = 0;
 
 //Events
 $(document).ready(function () {
-	////Load Data to Memory
-	rg_readExpandData();
+	//Load rg_data_xml Data to Memory
+	rg_readDropdownData();
 
-	////Load Template to Memory
+	//Load Template to Memory
 	rg_loadTemplate();
 
 	//Add RG preview-id data-attributes to original HTML
-	rg_addDataAndCreateList('#rich_gallery');
+	rg_addDataAndCreateList(rg_container);
 
 	//Counts preview boxes per row From screenWidth/user settings
 	rg_getRowCount();
@@ -35,20 +44,22 @@ $(document).ready(function () {
 		rg_getRowCount();
 	});
 
-	//Click
-	$('#rich_gallery > .rg-preview').click(function () {
-		//Potential multiple containers?
-		var container = '#rich_gallery';
+	//Click Action Creates or Clears Dropdown
+	$(rg_container + ' > .rg-preview').click(function () {
 		var previewId = $(this).attr('data-rg-id');
-
-		rg_insertExpand(container, previewId);
+		rg_insertDropdown(rg_container, previewId);
 	});
 });
 
 
+/*
+	Intialize
+*/
 
-//Initialize
+//Assign rg_container preview boxes data-rg-id
 function rg_addDataAndCreateList(container) {
+	
+	//ID's start at 1 to allow for easy row_count calculations
 	var count = 1;
 	$(container + ' > .rg-preview').each(function () {
 		$(this).attr('data-rg-id', count);
@@ -57,30 +68,34 @@ function rg_addDataAndCreateList(container) {
 	});
 }
 
+//Load Template to Memory
 function rg_loadTemplate() {
-	rg_templates.expand = $('#rg-expandTemplate').html();
+	rg_templates.dropdown = $('#rg-dropdownTemplate').html();
 }
 
-function rg_readExpandData() {
+//Load rg_data_xml Data to Memory -- *This can be edited to add extra [[fields]]
+function rg_readDropdownData() {
 	$.ajax({
 		type: "GET",
 		async: false,
-		url: "rg_expandData.xml",
+		url: rg_data_xml,
 		dataType: "xml",
 		success: function (xml) {
 
+			//Creates ID to match preview data-rg-id
 			var id = 1;
+
 			//Loop and Read
-			$(xml).find('expand').each(function (index) {
+			$(xml).find('dropdown').each(function (index) {
 
 				//Get data entries from file
 				var content = $(this).find("content").text();
 
-				//Create ExpandObject
-				var newExpandObject = new rg_expandObject(id, content);
+				//Create DropdownObject
+				var newDropdownObject = new rg_dropdownObject(id, content);
 
 				//Add each work entry to workList
-				rg_expandObjectList.push(newExpandObject);
+				rg_dropdownObjectList.push(newDropdownObject);
 
 				id++;
 			});
@@ -88,14 +103,19 @@ function rg_readExpandData() {
 	});
 }
 
-
 //Set Row Count global variable
 function rg_getRowCount() {
+
+	//Screen width = window width
 	var screenWidth = $(window).width();
+
+	//Set Row count depending on screenWidth
 	for (i = 0; i < rg_rowCount_minWidth.length; i++) {
 		if (screenWidth > rg_rowCount_minWidth[i][1]) {
+
+			//Clear Dropdown if there is a change in rowCount
 			if (rg_rowCount != rg_rowCount_minWidth[i][0]) {
-				rg_clearExpand();
+				rg_clearDropdown();
 				rg_rowCount = rg_rowCount_minWidth[i][0];
 			}
 			break;
@@ -104,12 +124,16 @@ function rg_getRowCount() {
 }
 
 
-//Create and Destroy expand box
-function rg_insertExpand(container, previewId)
+/*
+	Create and Clear Dropdowns
+*/
+
+//Create and Destroy Dropdown box
+function rg_insertDropdown(container, previewId)
 {
-	if (previewId == rg_activeExpand)
+	if (previewId == rg_activeDropdown)
 	{
-		rg_clearExpand();
+		rg_clearDropdown();
 	}
 	else
 	{
@@ -122,40 +146,49 @@ function rg_insertExpand(container, previewId)
 		}
 
 
-		//Clear Expands
-		rg_clearExpand();
+		//Clear Dropdowns
+		rg_clearDropdown();
 		rg_getDataToTemplate(previewId);
 
 		//Place after previewRowEnd
 		$(container + ' > .rg-preview[data-rg-id="' + previewRowEnd + '"]').after(rg_getDataToTemplate(previewId));
 
-		//Set globalVariable rg_activeExpand to previewId
-		rg_activeExpand = previewId;
+		//Set globalVariable rg_activeDropdown to previewId
+		rg_activeDropdown = previewId;
 	}
 }
 
-function rg_getDataToTemplate(id)
+//Replaces template with rg_data_xml Data -- *This can be edited to add extra [[fields]]
+function rg_getDataToTemplate(previewId)
 {
-	var expandData = rg_expandObjectList[id - 1];
-	return rg_templates.expand.replace("[[html]]", expandData.content);
+	var dropdownData = rg_dropdownObjectList[previewId - 1];
+	return rg_templates.dropdown.replace("[[html]]", dropdownData.content);
 }
 
-function rg_clearExpand() {
-	rg_activeExpand = 0;
-	$('.rg-expand-container').remove();
+//Clears Dropdowns
+function rg_clearDropdown() {
+	rg_activeDropdown = 0;
+	$('.rg-dropdown-container').remove();
 }
 
 
 
-//Expand Object Class
-function rg_expandObject(id, content) {
+/*
+	Classes
+*/
+
+//Dropdown Object -- *This can be edited to add extra [[fields]]
+function rg_dropdownObject(id, content) {
 	this.id = id;
 	this.content = content;
 }
 
 
+/*
+	Helpers
+*/
 
-//Helpers
+//Round Number Up
 function roundNumberUp(numberToRound, numberGoal)
 {
 	return Math.ceil(numberToRound / numberGoal) * numberGoal;
