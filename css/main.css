@@ -2,10 +2,6 @@
   float: left;
   width: 50%;
 }
-.rg-preview img {
-  display: block;
-  width: 100%;
-}
 @media (min-width: 640px) {
   .rg-preview {
     width: 33.3333%;
@@ -16,7 +12,11 @@
     width: 25%;
   }
 }
-.rg-expand-container {
+.rg-dropdown-container {
   width: 100%;
   clear: both;
+}
+img {
+  display: block;
+  width: 100%;
 }

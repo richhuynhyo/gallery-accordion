@@ -1,12 +1,15 @@
-# Psuedo Content Management System
+#Rich Gallery Accordian
 
-This site was created to enable me to display and quickly update a portfolio of creative projects. There is no "content manager" side for this system. Rather, I update the "data" directly.
+Simple, Responsive Gallery with drop down accordian feature.
 
-## XML Data 
-Because of the nature of github pages, I neeeded to create a solution that did not involve use of a database. Data is stored in an XML file that is accessed using jQuery.
-
-## Page Initialization with Templates
-The XML data is first loaded. The data is used to generate preview images/link buttons from a html template.  
+##Fully Customizeable
+With minimal base stylings for this plugin, the user has full control of its stylings.
 
 ## Reduce Unnecessary Server Load/Requests 
 Additional images are loaded only after the user clicks on a preview. This helps reduce unncessary server requests.
+
+## XML Data 
+Updating "Drop Down" information is made easier by isolating it onto an XML file. Add full blocks of HTML to rg_dropdownData.xml.  
+
+## Templating
+Advanced users can streamline consistent "Drop Down" by adding additional fields to the XML file and HTML template.
