@@ -1,8 +1,8 @@
-#Rich Gallery Accordian
+# Rich Gallery Accordian
 
 Simple, Responsive Gallery with drop down accordian feature.
 
-##Fully Customizeable
+## Fully Customizeable
 With minimal base stylings for this plugin, the user has full control of its stylings.
 
 ## Reduce Unnecessary Server Load/Requests 
